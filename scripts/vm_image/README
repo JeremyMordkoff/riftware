@@ -1,0 +1,22 @@
+
+
+vm_image scripts
+
+LXC instructions
+as of this writing, this code is only in branch lezz-mkvmimg
+
+create a fc20 image. Default name is fc20
+    wget http://repo.riftio.com/releases/open.riftio.com/OSM/fc20.tar
+    lxc image import fc20.tar --alias fc20
+
+extract two files from git
+   ./scripts/vm_image/scripts/init_container
+   ./scripts/vm_image/scripts/build_rift_runtime
+
+execute build_rift_runtime
+   bash ./build_rift_runtime
+
+
+
+
+
