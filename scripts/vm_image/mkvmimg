@@ -508,7 +508,7 @@ setup_access() {
 
     install --group=root --owner=root --mode=700 -d $STAGING/root/.ssh/
     if $CONTAINER; then
-       ssh-keygen -N "" -f /root/.ssh/id_rsa
+       test -f /root/.ssh/id_rsa || ssh-keygen -N "" -f /root/.ssh/id_rsa
        cat /root/.ssh/id_rsa.pub >>/root/.ssh/authorized_keys
     else
         cp $RIFT_ROOT/scripts/vm/root/.ssh/* $STAGING/root/.ssh/
