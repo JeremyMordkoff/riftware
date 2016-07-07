@@ -23,6 +23,7 @@ pycrypto==2.6.1
 PyYAML==3.11
 pytest
 pytest-xdist
+python-daemon
 requests==2.8.1
 six==1.10.0
 statistics

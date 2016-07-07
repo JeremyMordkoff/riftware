@@ -160,19 +160,32 @@ compress_qcow2() {
 
     if ! [ -x "$(command -v virt-sparsify)" ]; then
         echo "virt-sparsify is not installed, not compressing."
-    else
-        # save the big qcow
-        mv ${IMG_PREFIX}.qcow2 ${IMG_PREFIX}.orig.qcow2
-
-        src=${IMG_PREFIX}.orig.qcow2
-        dest=${IMG_PREFIX}.qcow2
-
-        # zero fill the free space and compress the qcow2
-        virt-sparsify --compress ${src} ${dest}
-
-        # we can safely remove the big qcow
-        rm -fv ${IMG_PREFIX}.orig.qcow2
+        return
     fi
+    temp=${IMG_PREFIX}.orig.qcow2
+    orig=${IMG_PREFIX}.qcow2
+
+    # zero fill the free space and compress the qcow2
+	LIBGUESTFS_DEBUG=1 virt-sparsify --check-tmpdir fail --compress ${orig} ${temp}
+	rc=$?
+	if [ $rc -ne 0 ]; then
+		echo "Sparsify failed. rc=$rc"
+		echo "Check that /tmp has a lot of free space ... 40+GB"
+		return
+	fi
+		
+	# can we safely remove the big qcow
+	if [ ! -s ${temp} ]; then
+		echo "sparsify failed: temp file not found"
+    fi
+
+	echo success 
+	echo original
+	ls -l ${orig}
+	echo new
+	ls -l ${temp}
+	rm -fv {$orig}
+	mv ${temp} ${orig}
 
 }
 
@@ -375,6 +388,9 @@ cmd_rc() {
 yum_install() {
     cmd $YUM --assumeyes --nogpgcheck install "$@" || die "yum '$@' failed"
 }
+yum_update() {
+    cmd $YUM --assumeyes --nogpgcheck update "$@" || die "yum '$@' failed"
+}
 
 
 pip_install() {
@@ -424,8 +440,7 @@ setup_fedora_repos() {
         cmd  rpm --rebuilddb
     fi
     if [[ $REPO_FILE =~ .rpm$ ]]; then
-        cmd_rc rpm -e --justdb --nodeps riftware-release
-        cmd $YUM localinstall --assumeyes $REPO_FILE
+        cmd rpm -i --force $REPO_FILE
     else
         cp $REPO_FILE $STAGING/etc/yum.repos.d/
     fi
@@ -455,6 +470,8 @@ setup_fedora_repos() {
     yum_install yum-utils
     # ok if this fails
     cmd yum-config-manager --quiet --enable updates3
+    # avoid a conflict later
+    yum_update vim-minimal
 }
 
 # this needs to be after the .rpms installs so that yum-utils is installed
@@ -476,10 +493,18 @@ config_rw_repos() {
 
 install_kernel() {
 
-    if [[ $CONTAINER ]]; then
-    yum_install kernel kernel-devel kernel-modules-extra
-    elif [ -n "$KERNEL_REV" ]; then
-    yum_install kernel-${KERNEL_REV} kernel-devel-${KERNEL_REV} kernel-modules-extra-${KERNEL_REV}
+    if [ -n "$KERNEL_REV" ]; then
+    	if $CONTAINER; then
+            yum_install kernel-devel-${KERNEL_REV}
+	    else
+            yum_install kernel-${KERNEL_REV} kernel-devel-${KERNEL_REV} kernel-modules-extra-${KERNEL_REV}
+        fi
+	    if [ ! -e /lib/modules/${KERNEL_REV}/build ]; then
+		    mkdir -p /lib/modules/${KERNEL_REV}
+		    ln -s /usr/src/kernels/${KERNEL_REV} /lib/modules/${KERNEL_REV}/build
+	    fi
+    else
+        yum_install kernel-devel 
     fi
 
 }
@@ -608,7 +633,7 @@ _NBD_NODES=""
 _EXTRA_DISK_SPACE_K=1572864
 KERNEL_REV="3.12.9-301.fc20.x86_64"
 
-REPO_FILE=http://repo.riftio.com/releases/riftware-release-latest.rpm
+REPO_FILE=http://repos.riftio.com/releases/riftware-fedora.rpm
 ONLY_RIFT_REPOS=1
 USE_INTERNET_REPOS=0
 FIX_PIP=1

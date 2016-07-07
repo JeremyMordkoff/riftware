@@ -14,6 +14,7 @@ binutils-2.23.88.0.1-13.fc20.x86_64
 boost-filesystem-1.54.0-9.fc20.x86_64
 boost-system-1.54.0-9.fc20.x86_64
 boost-thread-1.54.0-9.fc20.x86_64
+bridge-utils
 bzip2-1.0.6-9.fc20.x86_64
 bzip2-libs-1.0.6-9.fc20.x86_64
 ca-certificates-2013.1.94-18.fc20.noarch
@@ -487,3 +488,4 @@ zip-3.0-9.fc20.x86_64
 zlib-1.2.8-3.fc20.x86_64
 zlib-devel-1.2.8-3.fc20.x86_64
 zookeeper-java.noarch
+pcs

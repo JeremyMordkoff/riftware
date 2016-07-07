@@ -4,7 +4,9 @@ libpcap
 boost-filesystem-1.54.0-9.fc20.x86_64
 boost-system-1.54.0-9.fc20.x86_64
 boost-thread-1.54.0-9.fc20.x86_64
+i40evf-1.5.14
 npm
 pciutils
+qat_guest
 icu
 vconfig
