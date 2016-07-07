@@ -1,0 +1,152 @@
+#
+# RIFT.ware
+# Source is available at https://github.com/RIFTIO/RIFT.ware
+#
+[RIFT.ware]
+name=RIFT.ware
+baseurl=http://repos.riftio.com/releases/riftware/release/fedora/$releasever
+enabled=1
+metadata_expire=1m
+gpgcheck=0
+skip_if_unavailable=False
+
+[RIFT.ware-osm]
+name=RIFT.ware OSM
+baseurl=http://repos.riftio.com/releases/riftware/OSM/fedora/$releasever
+enabled=1
+metadata_expire=1m
+gpgcheck=0
+skip_if_unavailable=False
+#
+# open source projects modified and/or repackaged by RIFT.io
+# modified packages can be found in our github account https://github.com/RIFTIO/
+#
+[RIFT.packages]
+name=RIFT.ware Packages
+baseurl=http://repos.riftio.com/packages/fedora/$releasever
+enabled=1
+metadata_expire=1m
+gpgcheck=0
+skip_if_unavailable=False
+
+#
+# miscelaneous packages that are not part of a stock fc20 distribution
+#
+
+[RIFT.misc]
+name=Misc Packages collected by RIFT.io
+baseurl=http://repos.riftio.com/mirrors/fedora/$releasever/misc
+enabled=1
+metadata_expire=1m
+gpgcheck=0
+skip_if_unavailable=False
+
+# only available today for fc21 
+# only needed on hosts, not in VMs or containers
+[RIFT.kilo]
+name=openstack packstack Repacked by RIFT.io
+baseurl=http://repos.riftio.com/mirrors/fedora/$releasever/kilo_yum
+enabled=0
+metadata_expire=1d
+gpgcheck=0
+skip_if_unavailable=False
+
+
+[fedora]
+name=Fedora $releasever - $basearch
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/releases/$releasever/Everything/$basearch/os/
+enabled=1
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[fedora-debuginfo]
+name=Fedora $releasever - $basearch - Debug
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/releases/$releasever/Everything/$basearch/debug/
+enabled=0
+#metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[fedora-source]
+name=Fedora $releasever - Source
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/releases/$releasever/Everything/source/SRPMS/
+enabled=0
+#metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates2]
+name=RW Fedora Updates2
+baseurl=http://repos.riftio.com/frozen/fedora/updates2/
+enabled=1
+skip_if_unavailable=False
+
+[updates3]
+name=RW Fedora Updates3
+baseurl=http://repos.riftio.com/frozen/fedora/updates3/$releasever/$basearch/
+enabled=1
+skip_if_unavailable=False
+
+[updates]
+name=Fedora $releasever - $basearch - Updates
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/updates/$releasever/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates-debuginfo]
+name=Fedora $releasever - $basearch - Updates - Debug
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/updates/$releasever/$basearch/debug/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates-source]
+name=Fedora $releasever - Updates Source
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/updates/$releasever/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates-testing]
+name=Fedora $releasever - $basearch - Test Updates
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/updates/testing/$releasever/$basearch/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates-testing-debuginfo]
+name=Fedora $releasever - $basearch - Test Updates Debug
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/updates/testing/$releasever/$basearch/debug/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates-testing-source]
+name=Fedora $releasever - Test Updates Source
+failovermethod=priority
+baseurl=http://repos.riftio.com/frozen/fedora/updates/testing/$releasever/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+
+
