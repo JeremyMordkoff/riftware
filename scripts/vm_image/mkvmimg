@@ -661,7 +661,7 @@ usage() {
                         --container              Initialize this container
             -r, --rwrepo [REPO]      RW Repo to enable: release/testing/nightly [${RW_REPO}]
             -m, --modes [MODE]      Include packages for specified modes, may be repeated for multiple modes
-            --repo_file file         file to use to enable additional repos
+            --repofile file         file to use to enable additional repos
             --internet               do not delete existing repo files and get stuff from internet
 
                 CONTAINER OPTIONS:
@@ -740,7 +740,7 @@ while [ $# -gt 0 ]; do
         --clean|-c)
             CLEAN_FIRST=true
             ;;
-        --repo-file)
+        --repo-file|--repofile)
             shift
             REPO_FILE="$1"
             ;;
@@ -770,7 +770,7 @@ while [ $# -gt 0 ]; do
         *)
             set -x
             echo "args= $# "
-            #die "Unknown argument $1"
+            die "Unknown argument $1"
             ;;
     esac
     shift
