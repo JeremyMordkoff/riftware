@@ -1,7 +1,9 @@
 #!/bin/bash
 
-cd $(dirname $0)
-./scripts/vm_image/mkvmimg --container --modes ui --repofile ./riftware-fedora.repo
+yum install -y yum-utils curl
+curl -o /etc/yum.repos.d/OSM.repo http://buildtracker.riftio.com/repo_file/fc20/OSM/ 
+yum install -y --nogpgcheck rw.tools-container-tools rw.tools-scripts 
+/usr/rift/container_tools/mkcontainer  --modes ui
 yum -y install riftware-launchpad
 systemctl start rwlp
 MY_IP=$(ifconfig | awk '/127.0.0.1/ { next } 
